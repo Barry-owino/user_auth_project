@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import SignUpForm
+from django.contrib.auth.views import PasswordChangeView
+from django.urls import reverse_lazy
 
 # Create your views here.
 def register_view(request):
@@ -12,3 +14,7 @@ def register_view(request):
         else:
             form = SignUpForm()
         return render(request, 'accounts/register.html', {'form': form})
+
+class MyPasswordChangeView(PasswordChangeView):
+    template_name = 'accounts/change_password.html'
+    success_url = reverse_lazy('login')
